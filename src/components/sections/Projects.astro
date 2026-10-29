@@ -1,0 +1,33 @@
+---
+import ProjectGrid, {
+  type GridProject,
+} from "@/components/sections/ProjectGrid";
+import { getGridProjects } from "@/lib/content";
+
+// Only plain data crosses into the React island.
+const projects: GridProject[] = (await getGridProjects()).map(
+  ({ id, data }) => ({
+    id,
+    title: data.title,
+    summary: data.summary,
+    tech: data.tech,
+    github: data.github,
+    external: data.external,
+  }),
+);
+---
+
+<section class="container-page py-24">
+  <div class="mx-auto max-w-[1000px]">
+    <div class="mb-10 text-center">
+      <h2 class="text-[clamp(1.5rem,5vw,2rem)]">Other Noteworthy Projects</h2>
+      <a
+        href="/archive"
+        class="mt-3 inline-block font-mono text-sm text-accent underline decoration-transparent underline-offset-4 transition duration-250 hover:decoration-accent"
+      >
+        view the archive
+      </a>
+    </div>
+    <ProjectGrid client:visible projects={projects} />
+  </div>
+</section>

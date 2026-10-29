@@ -107,6 +107,18 @@
   }
 }
 
+/* Cards fading up into place (project grid). */
+@keyframes card-in {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+}
+
+.card-in {
+  animation: card-in 0.4s var(--ease-v4) backwards;
+}
+
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;

@@ -3,18 +3,13 @@ import About from "@/components/sections/About.astro";
 import Experience from "@/components/sections/Experience.astro";
 import Featured from "@/components/sections/Featured.astro";
 import Hero from "@/components/sections/Hero.astro";
+import Projects from "@/components/sections/Projects.astro";
 import SectionHeading from "@/components/ui/SectionHeading.astro";
 import BaseLayout from "@/layouts/BaseLayout.astro";
-import {
-  getArchiveProjects,
-  getGridProjects,
-  getPosts,
-  getTags,
-} from "@/lib/content";
+import { getArchiveProjects, getPosts, getTags } from "@/lib/content";
 
-// TEMPORARY: data for the "content check" block below, removed as Phase 4 sections land.
-const [grid, archive, posts, postTags] = await Promise.all([
-  getGridProjects(),
+// TEMPORARY: data for the "content check" block below, removed as Phase 4/5 sections land.
+const [archive, posts, postTags] = await Promise.all([
   getArchiveProjects(),
   getPosts(),
   getTags(),
@@ -26,16 +21,12 @@ const [grid, archive, posts, postTags] = await Promise.all([
   <About />
   <Experience />
   <Featured />
+  <Projects />
 
   <div class="container-page">
     <section class="mx-auto max-w-[1000px] space-y-6 py-24 text-[17px]">
       <SectionHeading number={0}>Content check (temporary)</SectionHeading>
-      <div>
-        <p class="font-mono text-sm text-accent">
-          Projects: grid {grid.length} · archive {archive.length}
-        </p>
-        <ul>{grid.map((p) => <li>{p.data.title}</li>)}</ul>
-      </div>
+      <p class="font-mono text-sm text-accent">Archive projects: {archive.length}</p>
       <div>
         <p class="font-mono text-sm text-accent">Posts ({posts.length})</p>
         <ul>{posts.map((p) => <li>{p.data.title}</li>)}</ul>
