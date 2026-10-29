@@ -1,4 +1,6 @@
 ---
+import "@fontsource-variable/fira-code";
+import "@fontsource-variable/inter";
 import "@/styles/global.css";
 
 interface Props {
@@ -15,9 +17,20 @@ const { title, description = "Personal portfolio" } = Astro.props;
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="description" content={description} />
+    <meta name="color-scheme" content="light dark" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="generator" content={Astro.generator} />
     <title>{title}</title>
+    <!-- Runs before first paint so a saved theme never flashes. Dark is the default. -->
+    <script is:inline>
+      (() => {
+        let theme;
+        try {
+          theme = localStorage.getItem("theme");
+        } catch {}
+        document.documentElement.dataset.theme = theme === "light" ? "light" : "dark";
+      })();
+    </script>
   </head>
   <body>
     <slot />
