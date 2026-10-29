@@ -1,7 +1,8 @@
 ---
-// Temporary design preview for Phase 1 review. Replaced by the real home sections in Phase 4.
 import { Image } from "astro:assets";
 import headshot from "@/assets/headshot.png";
+import Hero from "@/components/sections/Hero.astro";
+import SectionHeading from "@/components/ui/SectionHeading.astro";
 import { about, site } from "@/config";
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import {
@@ -14,6 +15,7 @@ import {
   getTags,
 } from "@/lib/content";
 
+// TEMPORARY: data for the "content check" block below, removed as Phase 4 sections land.
 const [jobs, featured, grid, archive, posts, postTags] = await Promise.all([
   getJobs(),
   getFeaturedProjects(),
@@ -22,109 +24,16 @@ const [jobs, featured, grid, archive, posts, postTags] = await Promise.all([
   getPosts(),
   getTags(),
 ]);
-
-const swatches = [
-  { name: "bg", cls: "bg-bg" },
-  { name: "surface", cls: "bg-surface" },
-  { name: "line", cls: "bg-line" },
-  { name: "muted", cls: "bg-muted" },
-  { name: "fg", cls: "bg-fg" },
-  { name: "heading", cls: "bg-heading" },
-  { name: "accent", cls: "bg-accent" },
-];
-
-const tags = ["Astro", "TypeScript", "React", "Tailwind"];
 ---
 
 <BaseLayout intro>
+  <Hero />
+
   <div class="container-page">
-    <section class="flex min-h-[calc(100dvh-100px)] max-w-5xl flex-col justify-center gap-5 py-24">
-      <p class="font-mono text-base text-accent">Hi, my name is</p>
-      <h1 class="text-[clamp(2.5rem,8vw,5rem)] leading-[1.1] tracking-tight">Your Name.</h1>
-      <p class="text-[clamp(2.5rem,8vw,5rem)] leading-[1.1] font-semibold tracking-tight text-muted">
-        I build things for the web.
-      </p>
-      <p class="max-w-[540px] pt-2">
-        Placeholder bio text. I'm a software engineer who enjoys building fast, accessible
-        interfaces. Right now I'm focused on{" "}
-        <a
-          href="#"
-          class="text-accent underline decoration-transparent underline-offset-4 transition duration-250 ease-v4 hover:decoration-accent"
-          >something interesting</a
-        >.
-      </p>
-      <div class="pt-8">
-        <a
-          href="#"
-          class="inline-block rounded border border-accent px-7 py-5 font-mono text-sm leading-none text-accent transition duration-250 ease-v4 hover:-translate-x-1 hover:-translate-y-1 hover:shadow-[4px_4px_0_0_var(--accent)]"
-        >
-          Check out my work!
-        </a>
-      </div>
-    </section>
-
-    <section class="mx-auto max-w-[1000px] space-y-10 py-24">
-      <h2 class="flex items-center gap-3 text-[clamp(1.625rem,5vw,2rem)] whitespace-nowrap">
-        <span class="font-mono text-base font-normal text-accent md:text-xl">01.</span> Palette
-        <span class="h-px w-full max-w-[300px] bg-line"></span>
-      </h2>
-      <ul class="grid grid-cols-2 gap-4 sm:grid-cols-4 lg:grid-cols-7">
-        {
-          swatches.map((s) => (
-            <li class="space-y-2">
-              <div class:list={["h-16 rounded border border-line", s.cls]} />
-              <p class="font-mono text-xs">{s.name}</p>
-            </li>
-          ))
-        }
-      </ul>
-    </section>
-
-    <section class="mx-auto max-w-[1000px] space-y-10 py-24">
-      <h2 class="flex items-center gap-3 text-[clamp(1.625rem,5vw,2rem)] whitespace-nowrap">
-        <span class="font-mono text-base font-normal text-accent md:text-xl">02.</span> Components
-        <span class="h-px w-full max-w-[300px] bg-line"></span>
-      </h2>
-      <div class="grid gap-6 md:grid-cols-2">
-        <article
-          class="group flex flex-col rounded bg-surface p-8 shadow-card transition duration-250 ease-v4 hover:-translate-y-2"
-        >
-          <p class="font-mono text-xs text-accent">Featured project</p>
-          <h3 class="mt-2 text-xl transition-colors group-hover:text-accent">Project title</h3>
-          <p class="mt-3 text-[17px] leading-relaxed">
-            A short placeholder description of the project, what it does, and why it matters.
-          </p>
-          <ul class="mt-auto flex flex-wrap gap-x-4 pt-6 font-mono text-xs">
-            {tags.map((t) => <li>{t}</li>)}
-          </ul>
-        </article>
-
-        <div class="min-w-0 space-y-4 rounded border border-line p-8 text-[17px]">
-          <p>Body text, inline code, and keys:</p>
-          <p class="leading-relaxed">
-            Run <code class="rounded bg-surface px-1.5 py-0.5 text-sm text-accent">pnpm dev</code> to start,
-            or press
-            <kbd class="rounded border border-line bg-surface px-1.5 py-0.5 text-xs">Ctrl</kbd>
-            <kbd class="rounded border border-line bg-surface px-1.5 py-0.5 text-xs">K</kbd> to search.
-          </p>
-          <pre class="overflow-x-auto rounded bg-surface p-4 text-sm text-fg"><code>{"const greet = (name: string) => `Hello, ${name}`;"}</code></pre>
-        </div>
-      </div>
-    </section>
-
-    <section class="mx-auto max-w-[1000px] space-y-10 py-24">
-      <h2 class="flex items-center gap-3 text-[clamp(1.625rem,5vw,2rem)] whitespace-nowrap">
-        <span class="font-mono text-base font-normal text-accent md:text-xl">03.</span> Content check
-        <span class="h-px w-full max-w-[300px] bg-line"></span>
-      </h2>
+    <section class="mx-auto max-w-[1000px] py-24">
+      <SectionHeading number={0}>Content check (temporary)</SectionHeading>
       <div class="grid gap-8 text-[17px] md:grid-cols-[200px_1fr]">
-        <Image
-          src={headshot}
-          alt={about.headshotAlt}
-          width={300}
-          class="rounded"
-          loading="lazy"
-        />
+        <Image src={headshot} alt={about.headshotAlt} width={300} class="rounded" loading="lazy" />
         <div class="space-y-6">
           <p><span class="text-heading">{site.name}</span> · {site.role} · {site.email}</p>
           <div>
