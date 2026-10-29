@@ -1,0 +1,18 @@
+---
+title: Building Fast Sites with Astro
+description: Placeholder post with code blocks to test Shiki syntax highlighting.
+date: 2025-06-02
+tags: [Astro, Performance, Web Dev]
+---
+
+Placeholder intro about shipping less JavaScript.
+
+```ts
+// Only this component ships JavaScript to the browser.
+export function Counter({ start = 0 }: { start?: number }) {
+  const [count, setCount] = useState(start);
+  return <button onClick={() => setCount(count + 1)}>{count}</button>;
+}
+```
+
+Inline code looks like `pnpm build`.

@@ -1,7 +1,28 @@
 ---
 // Temporary design preview for Phase 1 review. Replaced by the real home sections in Phase 4.
+import { Image } from "astro:assets";
+import headshot from "@/assets/headshot.png";
 import ThemeToggle from "@/components/layout/ThemeToggle.astro";
+import { about, site } from "@/config";
 import BaseLayout from "@/layouts/BaseLayout.astro";
+import {
+  formatRange,
+  getArchiveProjects,
+  getFeaturedProjects,
+  getGridProjects,
+  getJobs,
+  getPosts,
+  getTags,
+} from "@/lib/content";
+
+const [jobs, featured, grid, archive, posts, postTags] = await Promise.all([
+  getJobs(),
+  getFeaturedProjects(),
+  getGridProjects(),
+  getArchiveProjects(),
+  getPosts(),
+  getTags(),
+]);
 
 const swatches = [
   { name: "bg", cls: "bg-bg" },
@@ -93,6 +114,51 @@ const tags = ["Astro", "TypeScript", "React", "Tailwind"];
             <kbd class="rounded border border-line bg-surface px-1.5 py-0.5 text-xs">K</kbd> to search.
           </p>
           <pre class="overflow-x-auto rounded bg-surface p-4 text-sm text-fg"><code>{"const greet = (name: string) => `Hello, ${name}`;"}</code></pre>
+        </div>
+      </div>
+    </section>
+
+    <section class="mx-auto max-w-[1000px] space-y-10 py-24">
+      <h2 class="flex items-center gap-3 text-[clamp(1.625rem,5vw,2rem)] whitespace-nowrap">
+        <span class="font-mono text-base font-normal text-accent md:text-xl">03.</span> Content check
+        <span class="h-px w-full max-w-[300px] bg-line"></span>
+      </h2>
+      <div class="grid gap-8 text-[17px] md:grid-cols-[200px_1fr]">
+        <Image
+          src={headshot}
+          alt={about.headshotAlt}
+          width={300}
+          class="rounded"
+          loading="lazy"
+        />
+        <div class="space-y-6">
+          <p><span class="text-heading">{site.name}</span> · {site.role} · {site.email}</p>
+          <div>
+            <p class="font-mono text-sm text-accent">Jobs ({jobs.length})</p>
+            <ul>
+              {
+                jobs.map((j) => (
+                  <li>
+                    {j.data.title} @ {j.data.company} — {formatRange(j.data.start, j.data.end)}
+                  </li>
+                ))
+              }
+            </ul>
+          </div>
+          <div>
+            <p class="font-mono text-sm text-accent">
+              Projects: featured {featured.length} · grid {grid.length} · archive {archive.length}
+            </p>
+            <ul>{featured.map((p) => <li>★ {p.data.title}</li>)}</ul>
+            <ul>{grid.map((p) => <li>{p.data.title}</li>)}</ul>
+          </div>
+          <div>
+            <p class="font-mono text-sm text-accent">Posts ({posts.length})</p>
+            <ul>{posts.map((p) => <li>{p.data.title}</li>)}</ul>
+            <p class="font-mono text-xs">
+              Tags: {postTags.map(([tag, count]) => `${tag} (${count})`).join(", ")}
+            </p>
+          </div>
         </div>
       </div>
     </section>
