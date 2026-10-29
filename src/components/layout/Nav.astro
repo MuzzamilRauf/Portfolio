@@ -1,0 +1,205 @@
+---
+import Logo from "@/components/layout/Logo.astro";
+import ThemeToggle from "@/components/layout/ThemeToggle.astro";
+import Icon from "@/components/ui/Icon.astro";
+import { nav, site } from "@/config";
+
+const number = (i: number) => `${String(i + 1).padStart(2, "0")}.`;
+---
+
+<header
+  data-nav
+  class="fixed inset-x-0 top-0 z-50 flex h-[100px] items-center bg-bg/85 px-6 backdrop-blur transition-[height,translate,box-shadow] duration-250 ease-v4 data-hidden:-translate-y-full data-scrolled:h-[70px] data-scrolled:shadow-card sm:px-10 lg:px-12"
+>
+  <nav aria-label="Main" class="flex w-full items-center justify-between font-mono">
+    <a href="/" aria-label={`${site.name} — home`} class="text-accent transition duration-250 ease-v4 hover:-translate-y-0.5">
+      <Logo />
+    </a>
+
+    <div class="hidden items-center gap-6 md:flex">
+      <ol class="flex items-center gap-1 text-[13px]">
+        {
+          nav.map((item, i) => (
+            <li>
+              <a href={item.href} class="block px-2.5 py-2 text-fg transition-colors hover:text-accent">
+                <span class="mr-1 text-accent">{number(i)}</span>
+                {item.name}
+              </a>
+            </li>
+          ))
+        }
+      </ol>
+      {
+        site.resume && (
+          <a
+            href={site.resume}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="rounded border border-accent px-4 py-3 text-[13px] leading-none text-accent transition duration-250 ease-v4 hover:bg-accent-soft"
+          >
+            Resume
+          </a>
+        )
+      }
+      <ThemeToggle />
+    </div>
+
+    <div class="flex items-center gap-2 md:hidden">
+      <ThemeToggle />
+      <button
+        type="button"
+        data-menu-open
+        aria-label="Open menu"
+        aria-haspopup="dialog"
+        aria-controls="mobile-menu"
+        class="inline-flex size-11 items-center justify-center text-accent"
+      >
+        <Icon name="menu" class="size-8" />
+      </button>
+    </div>
+  </nav>
+</header>
+
+<dialog
+  id="mobile-menu"
+  aria-label="Menu"
+  class="menu m-0 ml-auto h-dvh max-h-none w-[min(75vw,400px)] max-w-none bg-surface p-0 text-fg shadow-[-10px_0_30px_-15px_var(--shadow)]"
+>
+  <div class="relative flex h-full flex-col items-center justify-center px-6 font-mono">
+    <button
+      type="button"
+      data-menu-close
+      aria-label="Close menu"
+      class="absolute top-6 right-6 inline-flex size-11 items-center justify-center text-accent"
+    >
+      <Icon name="close" class="size-8" />
+    </button>
+    <ol class="w-full space-y-2 text-center">
+      {
+        nav.map((item, i) => (
+          <li>
+            <a href={item.href} class="block py-3 text-lg transition-colors hover:text-accent">
+              <span class="block text-sm text-accent">{number(i)}</span>
+              {item.name}
+            </a>
+          </li>
+        ))
+      }
+    </ol>
+    {
+      site.resume && (
+        <a
+          href={site.resume}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="mt-10 rounded border border-accent px-12 py-4 text-sm text-accent hover:bg-accent-soft"
+        >
+          Resume
+        </a>
+      )
+    }
+  </div>
+</dialog>
+
+<style>
+  .menu {
+    translate: 100% 0;
+    transition:
+      translate 0.3s var(--ease-v4),
+      display 0.3s allow-discrete,
+      overlay 0.3s allow-discrete;
+  }
+
+  .menu[open] {
+    translate: 0 0;
+  }
+
+  .menu::backdrop {
+    background: rgb(2 12 27 / 0);
+    backdrop-filter: blur(0);
+    transition:
+      background 0.3s,
+      backdrop-filter 0.3s,
+      display 0.3s allow-discrete,
+      overlay 0.3s allow-discrete;
+  }
+
+  .menu[open]::backdrop {
+    background: rgb(2 12 27 / 0.5);
+    backdrop-filter: blur(4px);
+  }
+
+  @starting-style {
+    .menu[open] {
+      translate: 100% 0;
+    }
+
+    .menu[open]::backdrop {
+      background: rgb(2 12 27 / 0);
+      backdrop-filter: blur(0);
+    }
+  }
+
+  :global(html:has(dialog.menu[open])) {
+    overflow: hidden;
+  }
+</style>
+
+<script>
+  let lastY = 0;
+  let ticking = false;
+
+  // Hide the bar when scrolling down, show it when scrolling up, and shrink it once scrolled.
+  function updateNav() {
+    const header = document.querySelector<HTMLElement>("[data-nav]");
+    if (!header) return;
+    const y = window.scrollY;
+    header.toggleAttribute("data-scrolled", y > 20);
+    const menuOpen = document.querySelector<HTMLDialogElement>("dialog.menu")?.open;
+    header.toggleAttribute("data-hidden", !menuOpen && y > lastY && y > 100);
+    lastY = y;
+    ticking = false;
+  }
+
+  window.addEventListener(
+    "scroll",
+    () => {
+      if (!ticking) {
+        ticking = true;
+        requestAnimationFrame(updateNav);
+      }
+    },
+    { passive: true },
+  );
+
+  // The header also shows again when a keyboard user tabs into it.
+  document.addEventListener("focusin", (e) => {
+    const header = document.querySelector<HTMLElement>("[data-nav]");
+    if (header?.contains(e.target as Node)) header.removeAttribute("data-hidden");
+  });
+
+  function initMenu() {
+    const dialog = document.querySelector<HTMLDialogElement>("dialog.menu");
+    const openBtn = document.querySelector<HTMLButtonElement>("[data-menu-open]");
+    if (!dialog || !openBtn || dialog.dataset.bound) return;
+    dialog.dataset.bound = "true";
+
+    openBtn.addEventListener("click", () => dialog.showModal());
+    dialog.querySelector("[data-menu-close]")?.addEventListener("click", () => dialog.close());
+    // Close on link click, and on clicks on the backdrop (outside the panel).
+    dialog.addEventListener("click", (e) => {
+      const target = e.target as HTMLElement;
+      if (target === dialog || target.closest("a")) dialog.close();
+    });
+    matchMedia("(width >= 48rem)").addEventListener("change", (e) => {
+      if (e.matches) dialog.close();
+    });
+  }
+
+  updateNav();
+  initMenu();
+  document.addEventListener("astro:page-load", () => {
+    updateNav();
+    initMenu();
+  });
+</script>

@@ -1,0 +1,30 @@
+---
+import Icon from "@/components/ui/Icon.astro";
+import { credit, site, socials } from "@/config";
+
+const year = new Date().getFullYear();
+---
+
+<footer class="flex flex-col items-center gap-4 px-6 py-8 text-center font-mono text-xs">
+  <ul class="flex gap-2 md:hidden">
+    {
+      socials.map((s) => (
+        <li>
+          <a
+            href={s.url}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label={s.name}
+            class="block p-2.5 text-fg transition-colors hover:text-accent"
+          >
+            <Icon name={s.icon} class="size-5" />
+          </a>
+        </li>
+      ))
+    }
+  </ul>
+  <p>© {year} {site.name}</p>
+  <a href={credit.url} target="_blank" rel="noopener noreferrer" class="transition-colors hover:text-accent">
+    {credit.text}
+  </a>
+</footer>

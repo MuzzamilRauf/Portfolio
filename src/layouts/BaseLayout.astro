@@ -2,13 +2,30 @@
 import "@fontsource-variable/fira-code";
 import "@fontsource-variable/inter";
 import "@/styles/global.css";
+import Footer from "@/components/layout/Footer.astro";
+import Loader from "@/components/layout/Loader.astro";
+import Nav from "@/components/layout/Nav.astro";
+import SideLinks from "@/components/layout/SideLinks.astro";
+import { site } from "@/config";
 
 interface Props {
-  title: string;
+  title?: string;
   description?: string;
+  /** Show the once-per-session intro loader (home page only). */
+  intro?: boolean;
 }
 
-const { title, description = "Personal portfolio" } = Astro.props;
+const { title, description = site.description, intro = false } = Astro.props;
+const fullTitle = title ? `${title} | ${site.name}` : site.name;
+
+// Adds `html.intro` before first paint, once per session, unless reduced motion is on.
+const introScript = `(() => {
+  let seen = false;
+  try { seen = sessionStorage.getItem("intro-seen") === "1"; } catch {}
+  if (!seen && !matchMedia("(prefers-reduced-motion: reduce)").matches) {
+    document.documentElement.classList.add("intro");
+  }
+})();`;
 ---
 
 <!doctype html>
@@ -20,7 +37,7 @@ const { title, description = "Personal portfolio" } = Astro.props;
     <meta name="color-scheme" content="light dark" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="generator" content={Astro.generator} />
-    <title>{title}</title>
+    <title>{fullTitle}</title>
     <!-- Runs before first paint so a saved theme never flashes. Dark is the default. -->
     <script is:inline>
       (() => {
@@ -31,8 +48,21 @@ const { title, description = "Personal portfolio" } = Astro.props;
         document.documentElement.dataset.theme = theme === "light" ? "light" : "dark";
       })();
     </script>
+    {intro && <script is:inline set:html={introScript} />}
   </head>
   <body>
-    <slot />
+    <a
+      href="#content"
+      class="fixed top-4 left-4 z-[60] -translate-y-[200%] rounded bg-accent px-4 py-3 font-mono text-sm text-on-accent focus:translate-y-0"
+    >
+      Skip to content
+    </a>
+    {intro && <Loader />}
+    <Nav />
+    <SideLinks />
+    <main id="content" tabindex="-1" class="pt-[100px] focus:outline-none">
+      <slot />
+    </main>
+    <Footer />
   </body>
 </html>

@@ -1,0 +1,39 @@
+---
+// Fixed social icons (left) and email (right), each ending in a vertical line. Desktop only;
+// the footer shows the same links on small screens.
+import Icon from "@/components/ui/Icon.astro";
+import { site, socials } from "@/config";
+
+const line = "after:mt-6 after:block after:h-[90px] after:w-px after:bg-muted";
+---
+
+<div class="fixed bottom-0 left-5 z-10 hidden w-10 md:block lg:left-10">
+  <ul class:list={["flex flex-col items-center gap-1", line]}>
+    {
+      socials.map((s) => (
+        <li>
+          <a
+            href={s.url}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label={s.name}
+            class="block p-2.5 text-fg transition duration-250 ease-v4 hover:-translate-y-1 hover:text-accent"
+          >
+            <Icon name={s.icon} class="size-5" />
+          </a>
+        </li>
+      ))
+    }
+  </ul>
+</div>
+
+<div class="fixed right-5 bottom-0 z-10 hidden w-10 md:block lg:right-10">
+  <div class:list={["flex flex-col items-center", line]}>
+    <a
+      href={`mailto:${site.email}`}
+      class="p-2.5 font-mono text-xs tracking-[0.1em] text-fg transition duration-250 ease-v4 [writing-mode:vertical-rl] hover:-translate-y-1 hover:text-accent"
+    >
+      {site.email}
+    </a>
+  </div>
+</div>

@@ -2,7 +2,6 @@
 // Temporary design preview for Phase 1 review. Replaced by the real home sections in Phase 4.
 import { Image } from "astro:assets";
 import headshot from "@/assets/headshot.png";
-import ThemeToggle from "@/components/layout/ThemeToggle.astro";
 import { about, site } from "@/config";
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import {
@@ -37,14 +36,9 @@ const swatches = [
 const tags = ["Astro", "TypeScript", "React", "Tailwind"];
 ---
 
-<BaseLayout title="Your Name — Design preview">
-  <header class="container-page flex h-24 items-center justify-between">
-    <a href="/" class="font-mono text-2xl font-semibold text-accent">YN</a>
-    <ThemeToggle />
-  </header>
-
-  <main class="container-page">
-    <section class="flex min-h-[calc(100dvh-6rem)] max-w-5xl flex-col justify-center gap-5 py-24">
+<BaseLayout intro>
+  <div class="container-page">
+    <section class="flex min-h-[calc(100dvh-100px)] max-w-5xl flex-col justify-center gap-5 py-24">
       <p class="font-mono text-base text-accent">Hi, my name is</p>
       <h1 class="text-[clamp(2.5rem,8vw,5rem)] leading-[1.1] tracking-tight">Your Name.</h1>
       <p class="text-[clamp(2.5rem,8vw,5rem)] leading-[1.1] font-semibold tracking-tight text-muted">
@@ -52,7 +46,7 @@ const tags = ["Astro", "TypeScript", "React", "Tailwind"];
       </p>
       <p class="max-w-[540px] pt-2">
         Placeholder bio text. I'm a software engineer who enjoys building fast, accessible
-        interfaces. Right now I'm focused on
+        interfaces. Right now I'm focused on{" "}
         <a
           href="#"
           class="text-accent underline decoration-transparent underline-offset-4 transition duration-250 ease-v4 hover:decoration-accent"
@@ -105,7 +99,7 @@ const tags = ["Astro", "TypeScript", "React", "Tailwind"];
           </ul>
         </article>
 
-        <div class="space-y-4 rounded border border-line p-8 text-[17px]">
+        <div class="min-w-0 space-y-4 rounded border border-line p-8 text-[17px]">
           <p>Body text, inline code, and keys:</p>
           <p class="leading-relaxed">
             Run <code class="rounded bg-surface px-1.5 py-0.5 text-sm text-accent">pnpm dev</code> to start,
@@ -162,16 +156,5 @@ const tags = ["Astro", "TypeScript", "React", "Tailwind"];
         </div>
       </div>
     </section>
-  </main>
-
-  <footer class="py-6 text-center font-mono text-xs">
-    <a
-      href="https://github.com/bchiang7/v4"
-      target="_blank"
-      rel="noopener noreferrer"
-      class="transition-colors hover:text-accent"
-    >
-      Design inspired by Brittany Chiang
-    </a>
-  </footer>
+  </div>
 </BaseLayout>
