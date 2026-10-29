@@ -1,21 +1,19 @@
 ---
 import About from "@/components/sections/About.astro";
+import Experience from "@/components/sections/Experience.astro";
 import Hero from "@/components/sections/Hero.astro";
 import SectionHeading from "@/components/ui/SectionHeading.astro";
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import {
-  formatRange,
   getArchiveProjects,
   getFeaturedProjects,
   getGridProjects,
-  getJobs,
   getPosts,
   getTags,
 } from "@/lib/content";
 
 // TEMPORARY: data for the "content check" block below, removed as Phase 4 sections land.
-const [jobs, featured, grid, archive, posts, postTags] = await Promise.all([
-  getJobs(),
+const [featured, grid, archive, posts, postTags] = await Promise.all([
   getFeaturedProjects(),
   getGridProjects(),
   getArchiveProjects(),
@@ -27,22 +25,11 @@ const [jobs, featured, grid, archive, posts, postTags] = await Promise.all([
 <BaseLayout intro>
   <Hero />
   <About />
+  <Experience />
 
   <div class="container-page">
     <section class="mx-auto max-w-[1000px] space-y-6 py-24 text-[17px]">
       <SectionHeading number={0}>Content check (temporary)</SectionHeading>
-      <div>
-        <p class="font-mono text-sm text-accent">Jobs ({jobs.length})</p>
-        <ul>
-          {
-            jobs.map((j) => (
-              <li>
-                {j.data.title} @ {j.data.company} — {formatRange(j.data.start, j.data.end)}
-              </li>
-            ))
-          }
-        </ul>
-      </div>
       <div>
         <p class="font-mono text-sm text-accent">
           Projects: featured {featured.length} · grid {grid.length} · archive {archive.length}
