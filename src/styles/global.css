@@ -19,6 +19,7 @@
   --muted: #8892b0;
   --accent: #64ffda;
   --on-accent: #0a192f;
+  --danger: #ff8a80;
   --shadow: rgb(2 12 27 / 0.7);
 }
 
@@ -32,6 +33,7 @@
   --muted: #495670;
   --accent: #086b59;
   --on-accent: #ffffff;
+  --danger: #b42318;
   --shadow: rgb(10 25 47 / 0.12);
 }
 
@@ -45,6 +47,7 @@
   --color-accent: var(--accent);
   --color-accent-soft: color-mix(in srgb, var(--accent) 10%, transparent);
   --color-on-accent: var(--on-accent);
+  --color-danger: var(--danger);
   --shadow-card: 0 10px 30px -15px var(--shadow);
 }
 
