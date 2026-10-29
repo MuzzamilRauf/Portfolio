@@ -1,0 +1,48 @@
+---
+import { Image } from "astro:assets";
+import headshot from "@/assets/headshot.png";
+import SectionHeading from "@/components/ui/SectionHeading.astro";
+import { about } from "@/config";
+---
+
+<section id="about" class="container-page scroll-mt-24 py-24">
+  <div class="mx-auto max-w-[900px]">
+    <SectionHeading number={1}>About Me</SectionHeading>
+
+    <div class="grid gap-12 md:grid-cols-[3fr_2fr]">
+      <div class="space-y-4 text-[17px] leading-relaxed md:text-lg">
+        {about.paragraphs.map((p) => <p>{p}</p>)}
+        <p>Here are a few technologies I've been working with recently:</p>
+        <ul class="grid max-w-md grid-cols-2 gap-x-4 gap-y-2 pt-1 font-mono text-[13px]">
+          {
+            about.skills.map((skill) => (
+              <li class="relative pl-5 before:absolute before:left-0 before:text-accent before:content-['▹']">
+                {skill}
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+
+      <!-- Tinted photo with an offset frame; both relax on hover. -->
+      <div class="group relative mx-auto w-[70%] max-w-[300px] self-start md:mx-0 md:w-full">
+        <div
+          class="relative z-10 overflow-hidden rounded bg-accent shadow-card transition duration-250 ease-v4 group-hover:-translate-x-1 group-hover:-translate-y-1"
+        >
+          <Image
+            src={headshot}
+            alt={about.headshotAlt}
+            widths={[300, 600]}
+            sizes="(min-width: 768px) 300px, 70vw"
+            class="block w-full mix-blend-multiply contrast-100 grayscale transition duration-250 ease-v4 group-hover:mix-blend-normal group-hover:grayscale-0"
+          />
+        </div>
+        <div
+          class="absolute inset-0 translate-x-5 translate-y-5 rounded border-2 border-accent transition duration-250 ease-v4 group-hover:translate-x-4 group-hover:translate-y-4"
+          aria-hidden="true"
+        >
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

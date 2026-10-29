@@ -1,9 +1,7 @@
 ---
-import { Image } from "astro:assets";
-import headshot from "@/assets/headshot.png";
+import About from "@/components/sections/About.astro";
 import Hero from "@/components/sections/Hero.astro";
 import SectionHeading from "@/components/ui/SectionHeading.astro";
-import { about, site } from "@/config";
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import {
   formatRange,
@@ -28,41 +26,36 @@ const [jobs, featured, grid, archive, posts, postTags] = await Promise.all([
 
 <BaseLayout intro>
   <Hero />
+  <About />
 
   <div class="container-page">
-    <section class="mx-auto max-w-[1000px] py-24">
+    <section class="mx-auto max-w-[1000px] space-y-6 py-24 text-[17px]">
       <SectionHeading number={0}>Content check (temporary)</SectionHeading>
-      <div class="grid gap-8 text-[17px] md:grid-cols-[200px_1fr]">
-        <Image src={headshot} alt={about.headshotAlt} width={300} class="rounded" loading="lazy" />
-        <div class="space-y-6">
-          <p><span class="text-heading">{site.name}</span> · {site.role} · {site.email}</p>
-          <div>
-            <p class="font-mono text-sm text-accent">Jobs ({jobs.length})</p>
-            <ul>
-              {
-                jobs.map((j) => (
-                  <li>
-                    {j.data.title} @ {j.data.company} — {formatRange(j.data.start, j.data.end)}
-                  </li>
-                ))
-              }
-            </ul>
-          </div>
-          <div>
-            <p class="font-mono text-sm text-accent">
-              Projects: featured {featured.length} · grid {grid.length} · archive {archive.length}
-            </p>
-            <ul>{featured.map((p) => <li>★ {p.data.title}</li>)}</ul>
-            <ul>{grid.map((p) => <li>{p.data.title}</li>)}</ul>
-          </div>
-          <div>
-            <p class="font-mono text-sm text-accent">Posts ({posts.length})</p>
-            <ul>{posts.map((p) => <li>{p.data.title}</li>)}</ul>
-            <p class="font-mono text-xs">
-              Tags: {postTags.map(([tag, count]) => `${tag} (${count})`).join(", ")}
-            </p>
-          </div>
-        </div>
+      <div>
+        <p class="font-mono text-sm text-accent">Jobs ({jobs.length})</p>
+        <ul>
+          {
+            jobs.map((j) => (
+              <li>
+                {j.data.title} @ {j.data.company} — {formatRange(j.data.start, j.data.end)}
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+      <div>
+        <p class="font-mono text-sm text-accent">
+          Projects: featured {featured.length} · grid {grid.length} · archive {archive.length}
+        </p>
+        <ul>{featured.map((p) => <li>★ {p.data.title}</li>)}</ul>
+        <ul>{grid.map((p) => <li>{p.data.title}</li>)}</ul>
+      </div>
+      <div>
+        <p class="font-mono text-sm text-accent">Posts ({posts.length})</p>
+        <ul>{posts.map((p) => <li>{p.data.title}</li>)}</ul>
+        <p class="font-mono text-xs">
+          Tags: {postTags.map(([tag, count]) => `${tag} (${count})`).join(", ")}
+        </p>
       </div>
     </section>
   </div>
