@@ -1,0 +1,116 @@
+---
+import { Image } from "astro:assets";
+import Icon from "@/components/ui/Icon.astro";
+import SectionHeading from "@/components/ui/SectionHeading.astro";
+import { getFeaturedProjects } from "@/lib/content";
+
+const projects = await getFeaturedProjects();
+---
+
+<section id="projects" class="container-page scroll-mt-24 py-24">
+  <div class="mx-auto max-w-[1000px]">
+    <SectionHeading number={3}>Some Things I've Built</SectionHeading>
+
+    <ul class="space-y-16 md:space-y-28">
+      {
+        projects.map((project, i) => {
+          const { title, summary, tech, github, external, cover, coverAlt } = project.data;
+          // Every other project mirrors the layout: image right, text left.
+          const flip = i % 2 === 1;
+          const href = external ?? github;
+          return (
+            <li class="relative grid grid-cols-12 items-center overflow-hidden rounded shadow-card md:overflow-visible md:shadow-none">
+              <div
+                class:list={[
+                  "relative z-10 col-span-full row-start-1 p-8 sm:p-10 md:p-0",
+                  flip ? "md:col-[1/8] md:text-left" : "md:col-[6/-1] md:text-right",
+                ]}
+              >
+                <p class="mb-2 font-mono text-[13px] text-accent">Featured Project</p>
+                <h3 class="mb-5 text-2xl font-semibold md:text-[28px]">
+                  {href ? (
+                    <a
+                      href={href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      class="transition-colors hover:text-accent"
+                    >
+                      {title}
+                    </a>
+                  ) : (
+                    title
+                  )}
+                </h3>
+                <div class="text-[17px] leading-relaxed text-fg md:rounded md:bg-surface md:p-6 md:shadow-card">
+                  <p>{summary}</p>
+                </div>
+                {tech.length > 0 && (
+                  <ul
+                    class:list={[
+                      "mt-6 flex flex-wrap gap-x-5 gap-y-1 font-mono text-[13px]",
+                      !flip && "md:justify-end",
+                    ]}
+                  >
+                    {tech.map((t) => (
+                      <li>{t}</li>
+                    ))}
+                  </ul>
+                )}
+                <div class:list={["mt-3 -ml-2.5 flex items-center", !flip && "md:-mr-2.5 md:ml-0 md:justify-end"]}>
+                  {github && (
+                    <a
+                      href={github}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      aria-label={`${title} on GitHub`}
+                      class="p-2.5 text-fg transition-colors hover:text-accent"
+                    >
+                      <Icon name="github" class="size-5" />
+                    </a>
+                  )}
+                  {external && (
+                    <a
+                      href={external}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      aria-label={`${title} live site`}
+                      class="p-2.5 text-fg transition-colors hover:text-accent"
+                    >
+                      <Icon name="external" class="size-[22px]" />
+                    </a>
+                  )}
+                </div>
+              </div>
+
+              {cover && (
+                <div
+                  class:list={[
+                    "group col-span-full row-start-1 h-full md:h-auto",
+                    flip ? "md:col-[6/-1]" : "md:col-[1/8]",
+                  ]}
+                >
+                  <a
+                    href={href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    tabindex="-1"
+                    aria-hidden="true"
+                    class="block h-full overflow-hidden bg-surface md:rounded md:bg-accent"
+                  >
+                    <Image
+                      src={cover}
+                      alt={coverAlt ?? ""}
+                      widths={[700, 1400]}
+                      sizes="(min-width: 1000px) 580px, 100vw"
+                      class="h-full w-full object-cover opacity-20 transition duration-250 ease-v4 md:opacity-100 md:mix-blend-multiply md:grayscale md:group-hover:mix-blend-normal md:group-hover:grayscale-0"
+                    />
+                  </a>
+                </div>
+              )}
+            </li>
+          );
+        })
+      }
+    </ul>
+  </div>
+</section>

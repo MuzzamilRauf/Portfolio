@@ -1,20 +1,19 @@
 ---
 import About from "@/components/sections/About.astro";
 import Experience from "@/components/sections/Experience.astro";
+import Featured from "@/components/sections/Featured.astro";
 import Hero from "@/components/sections/Hero.astro";
 import SectionHeading from "@/components/ui/SectionHeading.astro";
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import {
   getArchiveProjects,
-  getFeaturedProjects,
   getGridProjects,
   getPosts,
   getTags,
 } from "@/lib/content";
 
 // TEMPORARY: data for the "content check" block below, removed as Phase 4 sections land.
-const [featured, grid, archive, posts, postTags] = await Promise.all([
-  getFeaturedProjects(),
+const [grid, archive, posts, postTags] = await Promise.all([
   getGridProjects(),
   getArchiveProjects(),
   getPosts(),
@@ -26,15 +25,15 @@ const [featured, grid, archive, posts, postTags] = await Promise.all([
   <Hero />
   <About />
   <Experience />
+  <Featured />
 
   <div class="container-page">
     <section class="mx-auto max-w-[1000px] space-y-6 py-24 text-[17px]">
       <SectionHeading number={0}>Content check (temporary)</SectionHeading>
       <div>
         <p class="font-mono text-sm text-accent">
-          Projects: featured {featured.length} · grid {grid.length} · archive {archive.length}
+          Projects: grid {grid.length} · archive {archive.length}
         </p>
-        <ul>{featured.map((p) => <li>★ {p.data.title}</li>)}</ul>
         <ul>{grid.map((p) => <li>{p.data.title}</li>)}</ul>
       </div>
       <div>
