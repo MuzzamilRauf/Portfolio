@@ -41,10 +41,27 @@ const number = (i: number) => `${String(i + 1).padStart(2, "0")}.`;
           </a>
         )
       }
+      <button
+        type="button"
+        data-search-open
+        aria-label="Search (Ctrl+K)"
+        class="inline-flex h-10 items-center gap-2 rounded border border-line px-3 text-[12px] text-fg transition-colors duration-250 hover:border-accent hover:text-accent"
+      >
+        <Icon name="search" class="size-4" />
+        <kbd data-search-kbd>Ctrl K</kbd>
+      </button>
       <ThemeToggle />
     </div>
 
-    <div class="flex items-center gap-2 md:hidden">
+    <div class="flex items-center gap-1 md:hidden">
+      <button
+        type="button"
+        data-search-open
+        aria-label="Search"
+        class="inline-flex size-10 items-center justify-center text-accent"
+      >
+        <Icon name="search" class="size-5" />
+      </button>
       <ThemeToggle />
       <button
         type="button"
@@ -179,6 +196,11 @@ const number = (i: number) => `${String(i + 1).padStart(2, "0")}.`;
   });
 
   function initMenu() {
+    // Show the Mac shortcut on Apple devices.
+    if (/Mac|iPhone|iPad/.test(navigator.platform)) {
+      for (const kbd of document.querySelectorAll("[data-search-kbd]")) kbd.textContent = "⌘K";
+    }
+
     const dialog = document.querySelector<HTMLDialogElement>("dialog.menu");
     const openBtn = document.querySelector<HTMLButtonElement>("[data-menu-open]");
     if (!dialog || !openBtn || dialog.dataset.bound) return;

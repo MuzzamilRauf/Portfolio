@@ -59,6 +59,22 @@ export async function getTags() {
   return [...counts].sort(([a], [b]) => a.localeCompare(b));
 }
 
+/** "Sep 15, 2025" */
+export function formatDate(date: Date) {
+  return new Intl.DateTimeFormat("en-US", {
+    month: "short",
+    day: "numeric",
+    year: "numeric",
+    timeZone: "UTC",
+  }).format(date);
+}
+
+/** Rough reading time for a markdown body at ~220 words per minute. */
+export function readingTime(body = "") {
+  const words = body.split(/\s+/).filter(Boolean).length;
+  return `${Math.max(1, Math.round(words / 220))} min read`;
+}
+
 /** URL-safe tag slug: "Web Dev" → "web-dev". */
 export function tagSlug(tag: string) {
   return tag

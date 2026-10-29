@@ -110,6 +110,136 @@
   }
 }
 
+/* Blog post body (rendered Markdown/MDX). */
+.prose {
+  @apply text-[17px] leading-relaxed text-fg md:text-lg;
+
+  & > * + * {
+    margin-top: 1.25em;
+  }
+
+  & h2,
+  & h3,
+  & h4 {
+    @apply mt-[2em] mb-[-0.25em] leading-snug text-heading;
+  }
+
+  & h2 {
+    @apply text-[1.6em];
+  }
+
+  & h3 {
+    @apply text-[1.3em];
+  }
+
+  & a {
+    @apply text-accent underline decoration-accent/40 underline-offset-4 transition-colors hover:decoration-accent;
+  }
+
+  & strong {
+    @apply font-semibold text-heading;
+  }
+
+  & ul,
+  & ol {
+    @apply space-y-2 pl-6;
+  }
+
+  & ul > li {
+    @apply relative;
+  }
+
+  & ul > li::before {
+    @apply absolute -left-6 text-accent content-['▹'];
+  }
+
+  & ol {
+    @apply list-decimal marker:font-mono marker:text-accent;
+  }
+
+  & blockquote {
+    @apply border-l-2 border-accent pl-5 text-muted italic;
+  }
+
+  & hr {
+    @apply my-12 border-line;
+  }
+
+  & img {
+    @apply rounded;
+  }
+
+  & :not(pre) > code {
+    @apply rounded bg-surface px-1.5 py-0.5 text-[0.85em] text-accent;
+  }
+
+  & pre {
+    @apply overflow-x-auto rounded border border-line p-5 text-sm leading-relaxed;
+  }
+
+  & table {
+    @apply block w-full overflow-x-auto border-collapse text-[0.95em];
+  }
+
+  & th,
+  & td {
+    @apply border-b border-line px-3 py-2 text-left;
+  }
+
+  & th {
+    @apply font-mono text-[13px] font-normal text-heading;
+  }
+}
+
+/* Shiki code blocks: pick the light or dark token colors to match the site theme. */
+.astro-code,
+.astro-code span {
+  color: var(--shiki-light);
+  background-color: var(--shiki-light-bg);
+}
+
+[data-theme="dark"] .astro-code,
+[data-theme="dark"] .astro-code span {
+  color: var(--shiki-dark);
+  background-color: var(--shiki-dark-bg);
+}
+
+/* Hero entrance: items fade up in sequence; after the intro loader when it plays. */
+@keyframes fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+}
+
+.hero-in {
+  animation: fade-up 0.6s var(--ease-v4) both;
+  animation-delay: calc(var(--d, 0) * 100ms + 100ms);
+}
+
+html.intro-delay .hero-in {
+  animation-delay: calc(var(--d, 0) * 100ms + 2300ms);
+}
+
+/*
+ * Scroll reveal with CSS scroll-driven animations — no JavaScript. Browsers without
+ * `animation-timeline` simply show the content.
+ */
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .reveal {
+      animation: fade-up linear both;
+    }
+
+    /* Separate (more specific) rule: the minifier would otherwise fold the timeline into the
+       `animation` shorthand, which browsers reject. */
+    html .reveal {
+      animation-timeline: view();
+      animation-range: entry 0% entry 60%;
+    }
+  }
+}
+
 /* Cards fading up into place (project grid). */
 @keyframes card-in {
   from {
@@ -125,6 +255,10 @@
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
+  }
+
+  .hero-in {
+    animation: none;
   }
 
   *,

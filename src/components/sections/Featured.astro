@@ -19,7 +19,7 @@ const projects = await getFeaturedProjects();
           const flip = i % 2 === 1;
           const href = external ?? github;
           return (
-            <li class="relative grid grid-cols-12 items-center overflow-hidden rounded shadow-card md:overflow-visible md:shadow-none">
+            <li class="reveal relative grid grid-cols-12 items-center overflow-hidden rounded shadow-card md:overflow-visible md:shadow-none">
               <div
                 class:list={[
                   "relative z-10 col-span-full row-start-1 p-8 sm:p-10 md:p-0",

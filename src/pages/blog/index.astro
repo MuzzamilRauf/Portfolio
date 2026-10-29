@@ -1,0 +1,20 @@
+---
+import PostList from "@/components/blog/PostList.astro";
+import PageHeader from "@/components/ui/PageHeader.astro";
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import { getPosts } from "@/lib/content";
+
+const posts = await getPosts();
+---
+
+<BaseLayout title="Blog" description="Notes and articles on web development.">
+  <div class="container-page mx-auto max-w-[1100px] pb-24">
+    <PageHeader title="Blog" subtitle="Notes on building for the web">
+      <p class="mt-6 flex flex-wrap gap-x-6 gap-y-2 font-mono text-[13px]">
+        <a href="/blog/tags" class="text-fg hover:text-accent">View all tags →</a>
+        <a href="/rss.xml" class="text-fg hover:text-accent">RSS feed</a>
+      </p>
+    </PageHeader>
+    {posts.length > 0 ? <PostList posts={posts} /> : <p>No posts yet.</p>}
+  </div>
+</BaseLayout>

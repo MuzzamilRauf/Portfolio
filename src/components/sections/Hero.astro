@@ -2,18 +2,22 @@
 import { hero, site } from "@/config";
 ---
 
+<!-- `hero-in` items fade up one after another (see global.css); --d is each item's step. -->
 <section
   class="container-page flex min-h-[calc(100dvh-100px)] flex-col items-start justify-center gap-5 pb-24"
 >
-  <p class="font-mono text-sm text-accent md:text-base">{hero.greeting}</p>
-  <h1 class="text-[clamp(2.5rem,8vw,5rem)] leading-[1.1] tracking-tight">{site.name}.</h1>
+  <p class="hero-in font-mono text-sm text-accent md:text-base" style="--d: 0">{hero.greeting}</p>
+  <h1 class="hero-in text-[clamp(2.5rem,8vw,5rem)] leading-[1.1] tracking-tight" style="--d: 1">
+    {site.name}.
+  </h1>
   <p
-    class="max-w-5xl text-[clamp(2.5rem,8vw,5rem)] leading-[1.1] font-semibold tracking-tight text-muted"
+    class="hero-in max-w-5xl text-[clamp(2.5rem,8vw,5rem)] leading-[1.1] font-semibold tracking-tight text-muted"
+    style="--d: 2"
   >
     {hero.headline}
   </p>
-  <p class="max-w-[540px] pt-2">{hero.intro}</p>
-  <div class="flex flex-wrap gap-4 pt-8">
+  <p class="hero-in max-w-[540px] pt-2" style="--d: 3">{hero.intro}</p>
+  <div class="hero-in flex flex-wrap gap-4 pt-8" style="--d: 4">
     <a
       href="/#projects"
       class="inline-block rounded border border-accent px-7 py-5 font-mono text-sm leading-none text-accent transition duration-250 ease-v4 hover:-translate-x-1 hover:-translate-y-1 hover:shadow-[4px_4px_0_0_var(--accent)]"

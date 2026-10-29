@@ -2,9 +2,11 @@
 import "@fontsource-variable/fira-code";
 import "@fontsource-variable/inter";
 import "@/styles/global.css";
+import { ClientRouter } from "astro:transitions";
 import Footer from "@/components/layout/Footer.astro";
 import Loader from "@/components/layout/Loader.astro";
 import Nav from "@/components/layout/Nav.astro";
+import Search from "@/components/layout/Search.astro";
 import SideLinks from "@/components/layout/SideLinks.astro";
 import { site } from "@/config";
 
@@ -19,11 +21,12 @@ const { title, description = site.description, intro = false } = Astro.props;
 const fullTitle = title ? `${title} | ${site.name}` : site.name;
 
 // Adds `html.intro` before first paint, once per session, unless reduced motion is on.
+// `intro-delay` stays after the loader finishes so the hero's entrance waits for it.
 const introScript = `(() => {
   let seen = false;
   try { seen = sessionStorage.getItem("intro-seen") === "1"; } catch {}
   if (!seen && !matchMedia("(prefers-reduced-motion: reduce)").matches) {
-    document.documentElement.classList.add("intro");
+    document.documentElement.classList.add("intro", "intro-delay");
   }
 })();`;
 ---
@@ -36,19 +39,26 @@ const introScript = `(() => {
     <meta name="description" content={description} />
     <meta name="color-scheme" content="light dark" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="alternate" type="application/rss+xml" title={`${site.name} — Blog`} href="/rss.xml" />
     <meta name="generator" content={Astro.generator} />
     <title>{fullTitle}</title>
-    <!-- Runs before first paint so a saved theme never flashes. Dark is the default. -->
+    <!-- Runs before first paint so a saved theme never flashes. Dark is the default.
+         Re-applied after each client-side navigation, which replaces <html>'s attributes. -->
     <script is:inline>
       (() => {
-        let theme;
-        try {
-          theme = localStorage.getItem("theme");
-        } catch {}
-        document.documentElement.dataset.theme = theme === "light" ? "light" : "dark";
+        const apply = (doc) => {
+          let theme;
+          try {
+            theme = localStorage.getItem("theme");
+          } catch {}
+          doc.documentElement.dataset.theme = theme === "light" ? "light" : "dark";
+        };
+        apply(document);
+        document.addEventListener("astro:before-swap", (e) => apply(e.newDocument));
       })();
     </script>
     {intro && <script is:inline set:html={introScript} />}
+    <ClientRouter />
   </head>
   <body>
     <a
@@ -64,5 +74,6 @@ const introScript = `(() => {
       <slot />
     </main>
     <Footer />
+    <Search />
   </body>
 </html>

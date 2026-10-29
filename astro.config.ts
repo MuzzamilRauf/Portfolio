@@ -9,6 +9,13 @@ export default defineConfig({
   site: "https://example.com",
   output: "static",
   integrations: [mdx(), react(), sitemap()],
+  markdown: {
+    // Both themes are emitted as CSS variables; global.css picks one from data-theme.
+    shikiConfig: {
+      themes: { light: "github-light", dark: "night-owl" },
+      defaultColor: false,
+    },
+  },
   vite: {
     plugins: [tailwindcss()],
   },
