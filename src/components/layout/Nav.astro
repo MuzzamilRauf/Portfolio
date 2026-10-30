@@ -30,18 +30,6 @@ const number = (i: number) => `${String(i + 1).padStart(2, "0")}.`;
           ))
         }
       </ol>
-      {
-        site.resume && (
-          <a
-            href={site.resume}
-            target="_blank"
-            rel="noopener noreferrer"
-            class="rounded border border-accent px-4 py-3 text-[13px] leading-none text-accent transition duration-250 ease-v4 hover:bg-accent-soft"
-          >
-            Resume
-          </a>
-        )
-      }
       <ThemeToggle />
     </div>
 

@@ -2,15 +2,15 @@
 // Jobs, projects, and posts live in src/content/; the headshot in src/assets/.
 
 export const site = {
-  name: "Your Name",
-  role: "Software Engineer",
+  name: "Muzzamil Rauf",
+  role: "AI/ML & Backend Engineer",
   description:
-    "Your Name is a software engineer who builds fast, accessible experiences for the web.",
+    "Muzzamil Rauf is an AI/ML and backend engineer. Projects, experience, and writing.",
   url: "https://example.com",
   email: "hello@example.com",
   location: "City, Country",
-  // Put the PDF at public/resume.pdf, or set to undefined to hide the link.
-  resume: undefined as string | undefined,
+  // PLACEHOLDER PDF at public/resume.pdf — replace with the real resume (same file name).
+  resume: "/resume.pdf",
 };
 
 export const hero = {
@@ -27,7 +27,7 @@ export const about = {
     "Wrap up with something current: a side project, a course you're teaching, or what you're learning next.",
   ],
   skills: ["Python", "PyTorch", "FastAPI", "PostgreSQL", "Docker", "AWS"],
-  headshotAlt: "Headshot of Your Name",
+  headshotAlt: "Headshot of Muzzamil Rauf",
 };
 
 export const contact = {

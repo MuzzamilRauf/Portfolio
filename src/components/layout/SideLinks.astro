@@ -4,11 +4,12 @@
 import Icon from "@/components/ui/Icon.astro";
 import { site, socials } from "@/config";
 
-const line = "after:mt-6 after:block after:h-[90px] after:w-px after:bg-muted";
+// The vertical line under each bar; its length sets how high the bar sits.
+const line = "after:mt-6 after:block after:w-px after:bg-muted";
 ---
 
 <aside aria-label="Social links" class="fixed bottom-0 left-5 z-10 hidden w-10 md:block lg:left-10">
-  <ul class:list={["flex flex-col items-center gap-1", line]}>
+  <ul class:list={["flex flex-col items-center gap-1 after:h-[240px]", line]}>
     {
       socials.map((s) => (
         <li>
@@ -28,7 +29,7 @@ const line = "after:mt-6 after:block after:h-[90px] after:w-px after:bg-muted";
 </aside>
 
 <aside aria-label="Email" class="fixed right-5 bottom-0 z-10 hidden w-10 md:block lg:right-10">
-  <div class:list={["flex flex-col items-center", line]}>
+  <div class:list={["flex flex-col items-center after:h-[120px]", line]}>
     <a
       href={`mailto:${site.email}`}
       class="p-2.5 font-mono text-xs tracking-[0.1em] text-fg transition duration-250 ease-v4 [writing-mode:vertical-rl] hover:-translate-y-1 hover:text-accent"
