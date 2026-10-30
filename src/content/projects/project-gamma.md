@@ -6,6 +6,4 @@ tech: [React Native, Expo, Firebase]
 external: https://example.com
 cover: ../../assets/projects/project-gamma.png
 coverAlt: Screenshot of Project Gamma
-featured: true
-featuredOrder: 3
 ---

@@ -6,6 +6,4 @@ location: Remote
 start: 2023-03-01
 ---
 
-- Placeholder: led the rebuild of the customer dashboard, cutting load time by 40%.
-- Placeholder: built a shared component library used across five product teams.
-- Placeholder: mentored junior engineers and ran weekly code-review sessions.
+Placeholder: lead the backend and ML platform team — model serving, data pipelines, and the APIs behind the product.

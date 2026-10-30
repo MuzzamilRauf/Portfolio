@@ -11,8 +11,6 @@ export const site = {
   location: "City, Country",
   // Put the PDF at public/resume.pdf, or set to undefined to hide the link.
   resume: undefined as string | undefined,
-  // Formspree form ID (the part after formspree.io/f/). Set in Phase 9.
-  formspreeId: import.meta.env.PUBLIC_FORMSPREE_ID as string | undefined,
 };
 
 export const hero = {
@@ -28,15 +26,12 @@ export const about = {
     "Fast-forward to today, and you've had the privilege of working at a few interesting places. Mention them here, along with what you focus on day to day.",
     "Wrap up with something current: a side project, a course you're teaching, or what you're learning next.",
   ],
-  skills: [
-    "TypeScript",
-    "React",
-    "Astro",
-    "Node.js",
-    "Tailwind CSS",
-    "PostgreSQL",
-  ],
+  skills: ["Python", "PyTorch", "FastAPI", "PostgreSQL", "Docker", "AWS"],
   headshotAlt: "Headshot of Your Name",
+};
+
+export const contact = {
+  text: "Placeholder: my inbox is always open — for work, collaborations, or just to say hi.",
 };
 
 export type SocialIcon = "github" | "linkedin" | "x" | "instagram" | "codepen";
@@ -51,8 +46,8 @@ export const socials: { name: string; url: string; icon: SocialIcon }[] = [
 export const nav = [
   { name: "About", href: "/#about" },
   { name: "Experience", href: "/#experience" },
-  { name: "Work", href: "/#projects" },
-  { name: "Blog", href: "/blog" },
+  { name: "Work", href: "/#work" },
+  { name: "Blog", href: "/#blog" },
   { name: "Contact", href: "/#contact" },
 ];
 

@@ -2,22 +2,24 @@ import { defineCollection } from "astro:content";
 import { glob } from "astro/loaders";
 import { z } from "astro/zod";
 
-// One file per job. The markdown body holds the bullet points.
+// One file per job. The markdown body is a short 1–2 line description.
 const jobs = defineCollection({
   loader: glob({ pattern: "**/*.md", base: "./src/content/jobs" }),
-  schema: z.object({
-    company: z.string(),
-    title: z.string(),
-    url: z.url().optional(),
-    location: z.string().optional(),
-    start: z.coerce.date(),
-    // Leave out for a current job ("Present").
-    end: z.coerce.date().optional(),
-  }),
+  schema: ({ image }) =>
+    z.object({
+      company: z.string(),
+      title: z.string(),
+      url: z.url().optional(),
+      location: z.string().optional(),
+      // Square company logo; without one, the company's initial is shown.
+      logo: image().optional(),
+      start: z.coerce.date(),
+      // Leave out for a current job ("Present").
+      end: z.coerce.date().optional(),
+    }),
 });
 
-// Every project lives here. `featured` puts it in the big showcase on the home page,
-// `showInGrid` / `showInArchive` control the other two lists.
+// One file per project, listed in the Work section.
 const projects = defineCollection({
   loader: glob({ pattern: "**/*.md", base: "./src/content/projects" }),
   schema: ({ image }) =>
@@ -28,14 +30,11 @@ const projects = defineCollection({
       tech: z.array(z.string()).default([]),
       github: z.url().optional(),
       external: z.url().optional(),
-      company: z.string().optional(),
+      // Small thumbnail next to the description; without one, a folder icon is shown.
       cover: image().optional(),
       coverAlt: z.string().optional(),
-      featured: z.boolean().default(false),
-      // Lower numbers show first among featured projects.
-      featuredOrder: z.number().default(99),
-      showInGrid: z.boolean().default(true),
-      showInArchive: z.boolean().default(true),
+      // Lower numbers show first; projects without one follow, newest first.
+      order: z.number().optional(),
     }),
 });
 

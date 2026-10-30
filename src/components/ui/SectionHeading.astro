@@ -1,17 +1,8 @@
 ---
-// "01. About Me ────" style heading. The line shrinks (and the text may wrap) on narrow screens.
-interface Props {
-  number: number;
-  id?: string;
-}
-
-const { number, id } = Astro.props;
+// Plain section title followed by a thin rule.
 ---
 
-<h2 id={id} class="mb-10 flex items-center gap-3 text-[clamp(1.625rem,5vw,2rem)] leading-tight">
-  <span class="shrink-0 font-mono text-base font-normal text-accent md:text-xl">
-    {String(number).padStart(2, "0")}.
-  </span>
+<h2 class="mb-8 flex items-center gap-4 text-[clamp(1.5rem,4vw,1.75rem)] leading-tight">
   <span class="min-w-0"><slot /></span>
-  <span class="ml-2 h-px min-w-8 flex-1 bg-line sm:max-w-[300px]" aria-hidden="true"></span>
+  <span class="h-px flex-1 bg-line" aria-hidden="true"></span>
 </h2>

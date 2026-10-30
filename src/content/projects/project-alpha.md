@@ -7,6 +7,4 @@ github: https://github.com/
 external: https://example.com
 cover: ../../assets/projects/project-alpha.png
 coverAlt: Screenshot of Project Alpha
-featured: true
-featuredOrder: 1
 ---

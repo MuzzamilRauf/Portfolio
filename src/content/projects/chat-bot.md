@@ -4,5 +4,4 @@ summary: Placeholder chatbot that answers common support questions from a knowle
 date: 2023-10-01
 tech: [Python, FastAPI, PostgreSQL]
 github: https://github.com/
-company: Northwind Labs
 ---

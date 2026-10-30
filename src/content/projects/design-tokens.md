@@ -4,5 +4,4 @@ summary: Placeholder library that syncs design tokens from Figma into CSS variab
 date: 2024-07-01
 tech: [TypeScript, CSS]
 github: https://github.com/
-company: Acme Studio
 ---

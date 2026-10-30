@@ -1,4 +1,4 @@
-// Stroke icons in the Feather style (MIT), shared by Icon.astro and React islands.
+// Stroke icons in the Feather style (MIT), rendered by Icon.astro.
 // Each value is the inner SVG markup for a 24×24 viewBox.
 export const iconPaths = {
   github:
@@ -15,9 +15,6 @@ export const iconPaths = {
   folder:
     '<path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/>',
   menu: '<path d="M4 7h16M8 12h12M12 17h8"/>',
-  search: '<circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/>',
-  file: '<path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6M8 13h8M8 17h5"/>',
-  hash: '<path d="M4 9h16M4 15h16M10 3 8 21M16 3l-2 18"/>',
   close: '<path d="M18 6 6 18M6 6l12 12"/>',
 } as const;
 

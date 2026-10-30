@@ -4,26 +4,11 @@
 @custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
 
 /*
- * Palette: v4-inspired navy + mint (dark is the default theme), with a light variant.
+ * Palette: light is the default theme; dark (navy + mint) via the toggle.
  * Components use the semantic names (bg-bg, text-muted, border-line, text-accent…),
  * so changing a theme only means editing the variables below.
  */
 :root,
-:root[data-theme="dark"] {
-  color-scheme: dark;
-  --bg: #0a192f;
-  --surface: #112240;
-  --line: #233554;
-  --fg: #ccd6f6;
-  --heading: #e6f1ff;
-  --muted: #8892b0;
-  --accent: #64ffda;
-  --on-accent: #0a192f;
-  --danger: #ff8a80;
-  --code-bg: var(--surface);
-  --shadow: rgb(2 12 27 / 0.7);
-}
-
 :root[data-theme="light"] {
   color-scheme: light;
   --bg: #f6f8fc;
@@ -37,6 +22,21 @@
   --danger: #b42318;
   --code-bg: #ffffff;
   --shadow: rgb(10 25 47 / 0.12);
+}
+
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --bg: #0a192f;
+  --surface: #112240;
+  --line: #233554;
+  --fg: #ccd6f6;
+  --heading: #e6f1ff;
+  --muted: #8892b0;
+  --accent: #64ffda;
+  --on-accent: #0a192f;
+  --danger: #ff8a80;
+  --code-bg: var(--surface);
+  --shadow: rgb(2 12 27 / 0.7);
 }
 
 @theme inline {
@@ -208,61 +208,9 @@
   color: var(--shiki-dark);
 }
 
-/* Hero entrance: items fade up in sequence; after the intro loader when it plays. */
-@keyframes fade-up {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-}
-
-.hero-in {
-  animation: fade-up 0.6s var(--ease-v4) both;
-  animation-delay: calc(var(--d, 0) * 100ms + 100ms);
-}
-
-html.intro-delay .hero-in {
-  animation-delay: calc(var(--d, 0) * 100ms + 2300ms);
-}
-
-/*
- * Scroll reveal with CSS scroll-driven animations — no JavaScript. Browsers without
- * `animation-timeline` simply show the content.
- */
-@supports (animation-timeline: view()) {
-  @media (prefers-reduced-motion: no-preference) {
-    .reveal {
-      animation: fade-up linear both;
-    }
-
-    /* Separate (more specific) rule: the minifier would otherwise fold the timeline into the
-       `animation` shorthand, which browsers reject. */
-    html .reveal {
-      animation-timeline: view();
-      animation-range: entry 0% entry 60%;
-    }
-  }
-}
-
-/* Cards fading up into place (project grid). */
-@keyframes card-in {
-  from {
-    opacity: 0;
-    transform: translateY(12px);
-  }
-}
-
-.card-in {
-  animation: card-in 0.4s var(--ease-v4) backwards;
-}
-
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
-  }
-
-  .hero-in {
-    animation: none;
   }
 
   *,
