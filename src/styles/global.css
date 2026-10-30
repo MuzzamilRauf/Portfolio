@@ -56,6 +56,8 @@
 @theme {
   --font-sans: "Inter Variable", ui-sans-serif, system-ui, sans-serif;
   --font-mono: "Fira Code Variable", ui-monospace, "SF Mono", Menlo, monospace;
+  --font-display:
+    "Space Grotesk Variable", "Inter Variable", ui-sans-serif, sans-serif;
   --ease-v4: cubic-bezier(0.645, 0.045, 0.355, 1);
 }
 
