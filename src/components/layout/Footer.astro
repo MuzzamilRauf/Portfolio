@@ -1,6 +1,6 @@
 ---
 import Icon from "@/components/ui/Icon.astro";
-import { credit, site, socials } from "@/config";
+import { site, socials } from "@/config";
 
 const year = new Date().getFullYear();
 ---
@@ -24,7 +24,4 @@ const year = new Date().getFullYear();
     }
   </ul>
   <p>© {year} {site.name}</p>
-  <a href={credit.url} target="_blank" rel="noopener noreferrer" class="transition-colors hover:text-accent">
-    {credit.text}
-  </a>
 </footer>

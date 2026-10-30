@@ -50,8 +50,3 @@ export const nav = [
   { name: "Blog", href: "/#blog" },
   { name: "Contact", href: "/#contact" },
 ];
-
-export const credit = {
-  text: "Design inspired by Brittany Chiang",
-  url: "https://github.com/bchiang7/v4",
-};
