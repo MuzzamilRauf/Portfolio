@@ -12,7 +12,11 @@ export default defineConfig({
   markdown: {
     // Both themes are emitted as CSS variables; global.css picks one from data-theme.
     shikiConfig: {
-      themes: { light: "github-light", dark: "night-owl" },
+      // High-contrast variants: every token passes WCAG AA on the site's surface color.
+      themes: {
+        light: "github-light-high-contrast",
+        dark: "github-dark-high-contrast",
+      },
       defaultColor: false,
     },
   },

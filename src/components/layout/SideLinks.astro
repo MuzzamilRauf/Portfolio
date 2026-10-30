@@ -7,7 +7,7 @@ import { site, socials } from "@/config";
 const line = "after:mt-6 after:block after:h-[90px] after:w-px after:bg-muted";
 ---
 
-<div class="fixed bottom-0 left-5 z-10 hidden w-10 md:block lg:left-10">
+<aside aria-label="Social links" class="fixed bottom-0 left-5 z-10 hidden w-10 md:block lg:left-10">
   <ul class:list={["flex flex-col items-center gap-1", line]}>
     {
       socials.map((s) => (
@@ -25,9 +25,9 @@ const line = "after:mt-6 after:block after:h-[90px] after:w-px after:bg-muted";
       ))
     }
   </ul>
-</div>
+</aside>
 
-<div class="fixed right-5 bottom-0 z-10 hidden w-10 md:block lg:right-10">
+<aside aria-label="Email" class="fixed right-5 bottom-0 z-10 hidden w-10 md:block lg:right-10">
   <div class:list={["flex flex-col items-center", line]}>
     <a
       href={`mailto:${site.email}`}
@@ -36,4 +36,4 @@ const line = "after:mt-6 after:block after:h-[90px] after:w-px after:bg-muted";
       {site.email}
     </a>
   </div>
-</div>
+</aside>
